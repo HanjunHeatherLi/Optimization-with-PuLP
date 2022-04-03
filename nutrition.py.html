@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>nutrition.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #008080; font-weight: bold;}
+.s3 { color: #0000ff;}
+.s4 { color: #808080; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+nutrition.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span>pulp <span class="s0">import </span>*
+<span class="s0">import </span>pandas <span class="s0">as </span>pd
+<span class="s0">import </span>xlrd
+pdSmallDiet=pd.read_excel(<span class="s2">&quot;diet.xls&quot;</span>, index_col=<span class="s3">0</span>)
+print(pdSmallDiet)
+data = pdSmallDiet[<span class="s3">0</span>:<span class="s3">64</span>]
+
+prob=LpProblem(<span class="s2">&quot;cheapest_diet&quot;</span>,LpMinimize)<span class="s4"># this is a minimize problem</span>
+n=LpVariable(<span class="s2">&quot;n&quot;</span>,lowBound=<span class="s3">1</span>,upBound=<span class="s3">64</span>)
+m=LpVariable(<span class="s2">&quot;mj&quot;</span>,lowBound=tolist(pdSmallDiet[<span class="s3">66</span>][<span class="s3">4</span>:]),upBound=[<span class="s3">67</span>,<span class="s3">4</span>:])
+
+
+status=prob.solve()
+LpStatus[status]
+
+</pre>
+</body>
+</html>
